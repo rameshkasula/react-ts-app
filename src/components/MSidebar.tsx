@@ -12,7 +12,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import { Box, Toolbar } from "@mui/material";
 import MAvatar from "./MAvatar";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Select, MenuItem } from "@mui/material";
 import { Socket } from "socket.io-client";
 
@@ -25,6 +25,22 @@ export default function MSidebar({ clients: clients }: any) {
   function leaveRoom() {
     reactNavigator("/");
   }
+
+  const [queryParams, setQueryParams] = useSearchParams();
+
+  const roomId = queryParams.get("roomId");
+  // copy to clipboard function
+
+  const handleCopy = () => {
+    navigator.clipboard
+      .writeText(roomId!)
+      .then(() => {
+        console.log("Room ID copied to clipboard");
+      })
+      .catch((error) => {
+        console.error("Error copying Room ID to clipboard:", error);
+      });
+  };
 
   return (
     <Fragment>
@@ -59,6 +75,10 @@ export default function MSidebar({ clients: clients }: any) {
           <Stack direction="column" spacing={2}>
             <MySelect />
             {/* <MyThemeSelect /> */}
+            <Button variant="contained" color="success" onClick={handleCopy}>
+              Copy to Clipboard
+            </Button>
+
             <Button
               variant="contained"
               color="error"

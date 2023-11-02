@@ -3,15 +3,11 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-// import { v4 as uuidV4 } from "uuid";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 
@@ -33,13 +29,17 @@ export default function Home() {
 
   const createNewRoom = (e: React.FormEvent) => {
     e.preventDefault();
-    //    const id = uuidV4();
     const id = generateRandomString(14);
     setRoomId(id);
     enqueueSnackbar(`Room ID: ${id} created. `, { variant: "success" });
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!roomId || roomId.length !== 14) {
+      enqueueSnackbar("Invalid Room ID. ", { variant: "error" });
+      return;
+    }
 
     naigate(`/editor?roomId=${roomId}`);
   };
@@ -70,6 +70,7 @@ export default function Home() {
             label="Room ID"
             value={roomId}
             onChange={(e) => setRoomId(e.target.value)}
+            placeholder="Room ID"
           />
 
           <Button
