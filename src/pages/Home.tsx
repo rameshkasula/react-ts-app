@@ -87,6 +87,7 @@ export default function Home() {
                 onClick={createNewRoom}
                 variant={"subtitle2"}
                 component={"body"}
+                sx={{ cursor: "pointer" }}
               >
                 {"Don't have an roomId? Create new"}
               </Typography>

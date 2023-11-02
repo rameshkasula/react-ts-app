@@ -33,7 +33,7 @@ export default function MEditor() {
   const roomId = queryParams.get("roomId");
 
   React.useEffect(() => {
-    const socketIo = io("http://localhost:9015").connect();
+    const socketIo = io("https://code-collab-api.vercel.app/").connect();
     SocketRef.current = socketIo;
 
     socketIo.on("connect", () => {
